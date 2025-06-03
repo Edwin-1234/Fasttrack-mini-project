@@ -37,7 +37,7 @@ app.config['SESSION_FILE_DIR'] = './flask_session'  # Create a folder for sessio
 app.config['SESSION_PERMANENT'] = False  # Session persists only while user is active
 Session(app)  # Initialize the session
 
-# Firebase setup
+# setuping firebase
 cred_path = os.getenv("FIREBASE_CRED_PATH")
 cred = credentials.Certificate(cred_path)
 firebase_admin.initialize_app(cred)
