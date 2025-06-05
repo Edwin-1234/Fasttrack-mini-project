@@ -1,0 +1,493 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{geometry}
+\usepackage{multicol}
+
+\geometry{a4paper, margin=1in} % Adjust margins to fit the table properly
+\renewcommand{\arraystretch}{1.2} % Increase row height for better readability
+
+\title{Fasttrack Delivery System Documentation and Test Case Report}
+\begin{document}
+
+\begin{center}
+    \textbf{\Huge Test Case Report}\\
+    \vspace{30pt}
+    \textbf{\Large for}\\
+    \vspace{60pt}
+    \textbf{\LARGE Fasttrack}\\
+    \vspace{40pt}
+    \textbf{\large Prepared by}\\
+    \vspace{30pt}
+   \textbf{\Large Akhil S Nair (KTE22CS009)}\\
+\vspace{30pt}
+\textbf{\Large Alwin Philip (KTE22CS012)}\\
+\vspace{30pt}
+\textbf{\Large Edwin Varkey (KTE22CS028)}\\
+\vspace{30pt}
+\textbf{\Large Jessin Sunny (KTE22CS036)}\\
+    \vspace{70pt}
+    \textbf{Department of Computer Science and Engineering}\\
+    \vspace{20pt}
+    \textbf{Rajiv Gandhi Institute of Technology, Kottayam}
+\end{center}
+\newpage
+\tableofcontents
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Introduction}
+The Fasttrack Delivery system is designed to streamline package delivery operations through following integrated components:
+\begin{itemize}
+    \item A Flutter-based mobile application for delivery personnel.
+    \item A comprehensive website for company management and administrative tasks.
+    \item A Flask-based backend API for processing package data and assignments.
+    \item A Firebase Firestore for real-time data updates, secure authentication, and data storage.
+    \item A Google Maps API for displaying map data and routes.
+\end{itemize}
+
+
+\subsection{System Overview}
+The Fasttrack Delivery system comprises three main components:
+
+\subsubsection{Flutter Mobile Application}
+\begin{itemize}
+    \item \textbf{User Authentication:} Secure login using Firebase Authentication.
+    \item \textbf{Employee Assignment \& Package Tracking:} Delivery personnel can view assigned packages, scan their assigned packages, and monitor real-time progress.
+    \item \textbf{Google Maps Integration:} Provides dynamic, real-time navigation and route optimization.
+    \item \textbf{Notifications:} Firebase Cloud Messaging alerts employees about new assignments and status changes.
+\end{itemize}
+
+\subsubsection{Website}
+The website serves as the control center for companies and administrators:
+\begin{itemize}
+    \item \textbf{Company Registration and Management:} 
+    \begin{itemize}
+       \item \texttt{register.html}, \texttt{login.html}, and \texttt{forgot.html} enable secure user registration and login.
+       \item \texttt{CompanyD.html}, \texttt{AfterReg.html}, and \texttt{dashboard.html} provide interfaces for companies to manage their profiles and view key metrics.
+    \end{itemize}
+    \item \textbf{Package Upload and Assignment:} 
+    \begin{itemize}
+       \item \texttt{UploadPack.html} and \texttt{package.html} facilitate the upload of daily package details and trigger assignment algorithms.
+    \end{itemize}
+    \item \textbf{Administrative Functions:} 
+    \begin{itemize}
+       \item Admin pages such as \texttt{AdminApp.html}, \texttt{AdminCD.html}, \texttt{AdminComplaints.html}, \texttt{AdminCV.html}, \texttt{Admindashboard.html}, \texttt{AdminRC.html}, \texttt{AdminReport.html}, and \texttt{AdminV.html} allow administrators to verify new company registrations, manage complaints, generate reports, and oversee system operations.
+    \end{itemize}
+    \item \textbf{Employee Management:} 
+    \begin{itemize}
+       \item Pages like \texttt{EmployeeD.html}, \texttt{EmployeePD.html}, \texttt{EmployeeR.html}, \texttt{Edit\_SelectE.html}, \texttt{SelectBE.html}, and \texttt{SelectTE.html} help companies manage employee records and assign delivery tasks.
+    \end{itemize}
+    \item \textbf{General Information:} 
+    \begin{itemize}
+       \item Additional pages (\texttt{about.html}, \texttt{contact.html}, \texttt{privacy.html}, \texttt{Terms.html}, etc.) provide information about the project, contact details, and legal policies.
+    \end{itemize}
+\end{itemize}
+
+\subsubsection{Backend (Flask API)}
+\begin{itemize}
+    \item \textbf{Data Processing:} Fetches package data from Firebase, processes assignments, and updates records.
+    \item \textbf{QR Code Generation:} Generates QR codes for tracking packages.
+    \item \textbf{Real-Time Updates:} Ensures synchronization between the mobile application and the website using Firebase Firestore.
+\end{itemize}
+
+\subsection{Modules}
+The Fasttrack Delivery system is organized into the following key modules:
+\begin{enumerate}
+    \item \textbf{User Authentication:} Secure login and registration for both employees and companies.
+    \item \textbf{Employee Management:} Registration, management, and assignment of delivery personnel.
+    \item \textbf{Package Upload and Assignment:} Upload of package details and automatic assignment based on workload.
+    \item \textbf{Google Maps Integration and Route Optimization:} Real-time navigation with dynamic route optimization.
+
+\end{enumerate}
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Test Case Report}
+
+\subsection{Introduction}
+This section details the test cases for the Fasttrack Delivery application. The test cases cover following modules: Admin, Company, Employee, Package Assignment, Route Optimization and Guest. Testing is performed in the following areas:
+\begin{itemize}
+    \item \textbf{Functional Testing:} Verifies that each feature works as intended.
+    \item \textbf{UI Testing:} Ensures the interface is user-friendly and pages load correctly.
+    \item \textbf{Performance Testing:} Checks system responsiveness under various conditions.
+    \item \textbf{Security Testing:} Confirms that sensitive functionalities are restricted to authorized users.
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Admin Module}
+
+\subsubsection{Scope of Testing}
+\begin{itemize}
+    \item \textbf{Functional Testing:}
+    \begin{itemize}
+        \item Admin login and authentication.
+        \item Approving or rejecting company registration requests.
+        \item Monitoring package assignments.
+        \item Managing admin and employee profiles.
+    \end{itemize}
+    \item \textbf{UI Testing:}
+    \begin{itemize}
+        \item Proper layout and navigation in the admin panel.
+        \item Consistent page loading and responsive design.
+    \end{itemize}
+    \item \textbf{Performance Testing:}
+    \begin{itemize}
+        \item Quick data retrieval and update speeds.
+    \end{itemize}
+    \item \textbf{Security Testing:}
+    \begin{itemize}
+        \item Ensuring that admin functionalities are accessible only to authorized personnel.
+    \end{itemize}
+\end{itemize}
+
+\subsubsection{Testing Environment}
+\begin{itemize}
+    \item \textbf{Hardware:} Desktop or Laptop.
+    \item \textbf{Software:} Web browser, Firebase, Supabase.
+    \item \textbf{Network:} Internet connection required.
+\end{itemize}
+
+\subsubsection{Test Cases}
+\small
+\setlength\LTleft{0pt}
+\setlength\LTright{0pt}
+\begin{longtable}{|c|p{2.8cm}|p{4cm}|p{2.8cm}|p{2.8cm}|c|}
+\hline
+\textbf{Test Case ID} & \textbf{Test Scenario} & \textbf{Test Steps} & \textbf{Expected Output} & \textbf{Actual Output} & \textbf{Status} \\
+\hline
+\endfirsthead
+\hline
+\textbf{Test Case ID} & \textbf{Test Scenario} & \textbf{Test Steps} & \textbf{Expected Output} & \textbf{Actual Output} & \textbf{Status} \\
+\hline
+\endhead
+TC01 & Admin Login & Open website $\rightarrow$ Enter credentials $\rightarrow$ Login & Admin logs in successfully & Admin logged in successfully & Pass \\
+\hline
+TC02 & Update Profile Details & Log in as Admin $\rightarrow$ Navigate to Profile $\rightarrow$ Modify details & Profile updated successfully & Profile updated successfully & Pass \\
+\hline
+TC03 & Approve/Reject Company Registration & Log in as Admin $\rightarrow$ Navigate to Company Registration Requests $\rightarrow$ Approve/Reject & Registration status updated correctly & Status updated correctly & Pass \\
+\hline
+\end{longtable}
+
+\subsubsection{Bug Report}
+\begin{itemize}
+    \item No critical bugs found during testing.
+\end{itemize}
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Company Module}
+
+\subsubsection{Scope of Testing}
+\begin{itemize}
+    \item \textbf{Functional Testing:}
+    \begin{itemize}
+        \item Company registration and login.
+        \item Managing employee records.
+        \item Uploading daily package details.
+        \item Assigning employees to package deliveries.
+    \end{itemize}
+    \item \textbf{UI Testing:}
+    \begin{itemize}
+        \item Intuitive forms and dashboards for company users.
+    \end{itemize}
+    \item \textbf{Performance Testing:}
+    \begin{itemize}
+        \item Fast loading times for package details and employee data.
+    \end{itemize}
+    \item \textbf{Security Testing:}
+    \begin{itemize}
+        \item Secure handling of company information and package data.
+    \end{itemize}
+\end{itemize}
+
+\subsubsection{Testing Environment}
+\begin{itemize}
+    \item \textbf{Hardware:} Desktop or laptop.
+    \item \textbf{Software:} Web browser, Flutter, Firebase.
+    \item \textbf{Network:} Internet connection required.
+\end{itemize}
+
+\subsubsection{Test Cases}
+\small
+\setlength\LTleft{0pt}
+\setlength\LTright{0pt}
+\begin{longtable}{|c|p{2.8cm}|p{4cm}|p{2.8cm}|p{2.8cm}|c|}
+\hline
+\textbf{Test Case ID} & \textbf{Test Scenario} & \textbf{Test Steps} & \textbf{Expected Output} & \textbf{Actual Output} & \textbf{Status} \\
+\hline
+\endfirsthead
+\hline
+\textbf{Test Case ID} & \textbf{Test Scenario} & \textbf{Test Steps} & \textbf{Expected Output} & \textbf{Actual Output} & \textbf{Status} \\
+\hline
+\endhead
+TC01 & Company Registration & Open website $\rightarrow$ Navigate to Registration $\rightarrow$ Enter details $\rightarrow$ Submit & Company account created successfully & Account created successfully & Pass \\
+\hline
+TC02 & Company Login & Open website $\rightarrow$ Enter credentials $\rightarrow$ Login & Company dashboard displayed & Dashboard displayed correctly & Pass \\
+\hline
+TC03 & Upload Package Details & Log in as Company $\rightarrow$ Navigate to Package Upload $\rightarrow$ Upload Excel file & Packages uploaded successfully & Packages uploaded successfully & Pass \\
+\hline
+TC04 & Employee Registration & Log in as Company $\rightarrow$ Register Employee $\rightarrow$ Enter the details and submit & Employee Registered Successfully & Employee Registered Successfully & Pass 
+\\
+\hline
+\end{longtable}
+
+\subsubsection{Bug Report}
+\begin{itemize}
+    \item No critical bugs found during testing.
+\end{itemize}
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Employee Module}
+
+\subsubsection{Scope of Testing}
+\begin{itemize}
+    \item \textbf{Functional Testing:}
+    \begin{itemize}
+        \item Employee login and authentication.
+        \item Viewing assigned package details.
+        \item Scanning QR Codes.
+        \item Notifications for new assignments.
+    \end{itemize}
+    \item \textbf{UI Testing:}
+    \begin{itemize}
+        \item Clear display of package information and intuitive navigation.
+    \end{itemize}
+    \item \textbf{Performance Testing:}
+    \begin{itemize}
+        \item Fast loading times for package data and navigation maps.
+    \end{itemize}
+    \item \textbf{Security Testing:}
+    \begin{itemize}
+        \item Secure access to delivery details and profile information.
+    \end{itemize}
+\end{itemize}
+
+\subsubsection{Testing Environment}
+\begin{itemize}
+    \item \textbf{Hardware:} Android/iOS device.
+    \item \textbf{Software:} Flutter, Firebase.
+    \item \textbf{Network:} Internet connection required.
+\end{itemize}
+
+\subsubsection{Test Cases}
+\small
+\setlength\LTleft{0pt}
+\setlength\LTright{0pt}
+\begin{longtable}{|c|p{2.8cm}|p{4cm}|p{2.8cm}|p{2.8cm}|c|}
+\hline
+\textbf{Test Case ID} & \textbf{Test Scenario} & \textbf{Test Steps} & \textbf{Expected Output} & \textbf{Actual Output} & \textbf{Status} \\
+\hline
+\endfirsthead
+\hline
+\textbf{Test Case ID} & \textbf{Test Scenario} & \textbf{Test Steps} & \textbf{Expected Output} & \textbf{Actual Output} & \textbf{Status} \\
+\hline
+\endhead
+TC01 & Employee Login & Open app $\rightarrow$ Enter credentials $\rightarrow$ Login & Employee dashboard displayed & Dashboard displayed correctly & Pass \\
+\hline
+TC02 & View Assigned Packages & Log in as Employee $\rightarrow$ Navigate to My Deliveries & List of assigned packages displayed & Packages displayed correctly & Pass \\
+\hline
+TC03 & Scan QR Codes & Log in as Employee $\rightarrow$ Select package $\rightarrow$ Scan QR Code & Package status updated successfully & Package Status updated successfully & Pass \\
+\hline
+TC04 & Notifications & Log in as Employee $\rightarrow$ Wait for  notifications & Notifications received for new assignments & Notifications received & Pass \\
+\hline
+\end{longtable}
+
+\subsubsection{Bug Report}
+\begin{itemize}
+    \item Pickup location were not considered during route generation. This issue was resolved later
+\end{itemize}
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Package Assignment Module}
+
+\subsubsection{Scope of Testing}
+\begin{itemize}
+    \item \textbf{Functional Testing:}
+    \begin{itemize}
+        \item Uploading package details.
+        \item Automatic employee assignment based on workload.
+        \item Real-time updates of package status.
+    \end{itemize}
+    \item \textbf{UI Testing:}
+    \begin{itemize}
+        \item Clear display of package information and assignment status.
+    \end{itemize}
+    \item \textbf{Performance Testing:}
+    \begin{itemize}
+        \item Quick processing of package details and assignment logic.
+    \end{itemize}
+    \item \textbf{Security Testing:}
+    \begin{itemize}
+        \item Secure synchronization with Firebase Firestore.
+    \end{itemize}
+\end{itemize}
+
+\subsubsection{Testing Environment}
+\begin{itemize}
+    \item \textbf{Hardware:} Desktop/laptop.
+    \item \textbf{Software:} Web browser, Flutter, Firebase.
+    \item \textbf{Network:} Internet connection required.
+\end{itemize}
+
+\subsubsection{Test Cases}
+\small
+\setlength\LTleft{0pt}
+\setlength\LTright{0pt}
+\begin{longtable}{|c|p{2.8cm}|p{4cm}|p{2.8cm}|p{2.8cm}|c|}
+\hline
+\textbf{Test Case ID} & \textbf{Test Scenario} & \textbf{Test Steps} & \textbf{Expected Output} & \textbf{Actual Output} & \textbf{Status} \\
+\hline
+\endfirsthead
+\hline
+\textbf{Test Case ID} & \textbf{Test Scenario} & \textbf{Test Steps} & \textbf{Expected Output} & \textbf{Actual Output} & \textbf{Status} \\
+\hline
+\endhead
+TC01 & Upload Package Details & Log in as Company $\rightarrow$ Navigate to Package Upload $\rightarrow$ Upload Excel file & Packages uploaded successfully & Packages uploaded successfully & Pass \\
+\hline
+TC02 & Assign Employees & Log in as Company $\rightarrow$ Navigate to Employee Assignment $\rightarrow$ Select available employees $\rightarrow$ Assign packages & Employees assigned based on workload & Assignments updated incorrectly & Fail \\
+\hline
+TC03 & Assign Employees & Log in as Company $\rightarrow$ Navigate to Employee Assignment $\rightarrow$ Select available employees $\rightarrow$ Assign packages & Employees assigned based on workload & Assignments updated correctly & Pass \\
+\hline
+TC04 & Real-Time Package Updates & Log in as Company $\rightarrow$ Navigate to Package Assignment $\rightarrow$ Monitor package status & Package statuses updated in real-time & Statuses updated correctly & Pass \\
+\hline
+\end{longtable}
+
+\subsubsection{Bug Report}
+\begin{itemize}
+    \item Wrong Packets were assigned to the delivery personnel. The cause of the problem was identified. Later, the issue was resolved successfully.
+\end{itemize}
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Route Optimization Module}
+
+\subsubsection{Scope of Testing}
+\begin{itemize}
+\item \textbf{Functional Testing:}
+\begin{itemize}
+\item Optimized route calculation for delivery personnel.
+\item Dynamic route adjustments based on traffic conditions.
+\item Real-time updates of route changes and estimated delivery times.
+\end{itemize}
+\item \textbf{UI Testing:}
+\begin{itemize}
+\item Clear display of optimized routes on the map.
+\end{itemize}
+\item \textbf{Performance Testing:}
+\begin{itemize}
+\item Fast computation of optimized routes.
+\item Efficient handling of multiple deliveries per route.
+\end{itemize}
+\item \textbf{Security Testing:}
+\begin{itemize}
+\item Secure API integration with Google Maps for route optimization.
+\end{itemize}
+\end{itemize}
+
+\subsubsection{Testing Environment}
+\begin{itemize}
+\item \textbf{Hardware:} Android Device
+\item \textbf{Software:} Web browser, Flutter app, Google Maps API.
+\item \textbf{Network:} Internet connection required.
+\end{itemize}
+
+\subsubsection{Test Cases}
+\small
+\setlength\LTleft{0pt}
+\setlength\LTright{0pt}
+\begin{longtable}{|c|p{2.8cm}|p{4cm}|p{2.8cm}|p{2.8cm}|c|}
+
+\hline
+\textbf{Test Case ID} & \textbf{Test Scenario} & \textbf{Test Steps} & \textbf{Expected Output} & \textbf{Actual Output} & \textbf{Status} \\
+\hline
+TC01 & Route Calculation & Log in as Employee $\rightarrow$ Navigate to Assigned Deliveries $\rightarrow$ View optimized route & Route calculated based on shortest time and distance & Route displayed correctly & Pass \\
+\hline
+TC02 & Real-Time ETA Update & Log in as Employee $\rightarrow$ Start navigation $\rightarrow$ Monitor ETA changes based on real-time traffic & ETA updates dynamically as conditions change & ETA updated incorrectly & Fail \\
+\hline
+TC03 & Real-Time ETA Update & Log in as Employee $\rightarrow$ Start navigation $\rightarrow$ Monitor ETA changes based on real-time traffic & ETA updates dynamically as conditions change & ETA updated correctly & Pass \\
+\hline
+TC04 & Multiple Deliveries Optimization & Log in as Employee $\rightarrow$ View assigned deliveries $\rightarrow$ System optimizes stops for efficiency & Deliveries arranged in the most time-efficient order & Stops optimized correctly & Pass \\
+\hline
+\end{longtable}
+
+\subsubsection{Bug Report}
+\begin{itemize}
+\item Some routes were not optimized correctly due to API misconfiguration. The issue was resolved by adjusting route preferences.
+\end{itemize}
+
+\newpage
+\subsection{Guest Route Optimization Module}
+
+\subsubsection{Scope of Testing}
+\begin{itemize}
+    \item \textbf{Functional Testing:}
+    \begin{itemize}
+        \item User inputs multiple locations.
+        \item System calculates the optimized route for the shortest travel time.
+    \end{itemize}
+    \item \textbf{UI Testing:}
+    \begin{itemize}
+        \item Clear display of input fields for locations.
+        \item Optimized route visualization on the map.
+    \end{itemize}
+    \item \textbf{Performance Testing:}
+    \begin{itemize}
+        \item Fast computation of optimized routes.
+        \item Efficient handling of multiple waypoints.
+    \end{itemize}
+    \item \textbf{Security Testing:}
+    \begin{itemize}
+        \item Secure API integration with Google Maps for route optimization.
+    \end{itemize}
+\end{itemize}
+
+\subsubsection{Testing Environment}
+\begin{itemize}
+    \item \textbf{Hardware:} Android device.
+    \item \textbf{Software:} Flutter app, Google Maps API.
+    \item \textbf{Network:} Internet connection required.
+\end{itemize}
+
+\subsubsection{Test Cases}
+\small
+\setlength\LTleft{0pt}
+\setlength\LTright{0pt}
+\begin{longtable}{|c|p{2.8cm}|p{4cm}|p{2.8cm}|p{2.8cm}|c|}
+\hline
+\textbf{Test Case ID} & \textbf{Test Scenario} & \textbf{Test Steps} & \textbf{Expected Output} & \textbf{Actual Output} & \textbf{Status} \\
+\hline
+\endfirsthead
+\hline
+\textbf{Test Case ID} & \textbf{Test Scenario} & \textbf{Test Steps} & \textbf{Expected Output} & \textbf{Actual Output} & \textbf{Status} \\
+\hline
+\endhead
+TC01 & Location Input & Open application as Guest $\rightarrow$ Enter multiple locations $\rightarrow$ Submit for route optimization & Locations accepted and displayed on map & Locations displayed correctly & Pass \\
+\hline
+TC02 & Route Calculation & Enter multiple locations $\rightarrow$ Request optimized path & Optimized route calculated with shortest distance & Route displayed correctly & Pass \\
+\hline
+TC043 & Real-Time ETA Update & Start navigation $\rightarrow$ Monitor ETA changes based on real-time traffic & ETA updates dynamically as conditions change & ETA updated correctly & Pass \\
+\hline
+TC04 & Multiple Waypoint Optimization & Enter multiple destinations $\rightarrow$ System optimizes stop sequence & Destinations arranged in the nearest neighbour approach & Stops optimized correctly & Pass \\
+\hline
+\end{longtable}
+
+\subsubsection{Bug Report}
+\begin{itemize}
+    \item No critical bugs found during testing.
+\end{itemize}
+
+\section{Conclusion}
+The Fasttrack Delivery system efficiently manages Package Assignment and Route Optimization through the seamless integration of Flutter, Firebase, Google Maps and Flask. All core functionalities have been rigorously tested, and the system meets the design specifications. Future enhancements include AI-based route optimization and automated package sorting to further improve operational efficiency.
+\end{document}
