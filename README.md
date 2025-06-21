@@ -1,6 +1,6 @@
 # 🚚 Fasttrack – Logistics & Delivery Management System
 
-Fasttrack is a logistics and delivery management system designed to streamline package assignment, delivery tracking, and route optimization across warehouses. It consists of a **Flask-based web admin portal** and a **Flutter mobile application** used by delivery personnel.
+Fasttrack is a logistics and delivery management system designed to streamline package assignment, delivery tracking, and route optimization across warehouses. It consists of a **Flask-based web portal** and a **Flutter mobile application** used by delivery personnel.
 
 ---
 
@@ -14,30 +14,9 @@ To build a unified system for logistics companies that:
 
 ---
 
-## 📁 Project Structure
-
-```
-Fasttrack-mini-project/
-├── website/         # Admin & company-facing web portal
-│   ├── app.py       # Flask backend
-│   ├── templates/   # HTML (e.g. dashboards, reports)
-│   ├── static/      # CSS, JS, Images
-│   ├── requirements.txt
-│   └── .env         # (ignored in Git)
-├── app/             # Flutter delivery boy app
-│   ├── lib/         # Dart source
-│   ├── android/     # Android platform setup
-│   ├── ios/         # iOS platform setup
-│   ├── pubspec.yaml
-│   └── .gitignore
-└── README.md
-```
-
----
-
 ## 🧠 Key Features
 
-### 🖥️ Website (Admin Portal)
+### 🖥️ Website
 - 🏢 Company login and dashboard
 - 📦 Upload package details (location, weight, destination, etc.)
 - 🤖 Automatically assigns packages using distance/availability-based logic
